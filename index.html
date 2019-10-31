@@ -1,87 +1,83 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="assets/css/index.css">
-        <link rel="stylesheet" href="assets/css/animate.css">
-    </head>
-    <body>
-        <div class="row">
-            <div class="col-md-2 side-bar">
-                <div class="side">
-                    <div class="shopping-cart-text">
-                        <h3>Shopping Cart</h3>
-                    </div>
-                    <hr class="small-line">
-                    <img src="/assets/images/cart.png" height="200px" width="200px">
-                    <button onclick="changeview()" type="button" class="btn btn-light">
-                    View Shopping Cart 
-                </button>
-            </div>
-            </div>
-            <div class="col-md-10 full-bar">
-                <input class="xty form-control mr-sm-2" type="search" placeholder="Search" aria-label="search">
-        <div class="empty-top"></div>
-<div class="items">
-       <p>Item name: T-shirt <span class="quantity animated wobble infinite"> <label>Quantity</label><input type="text"></span></p>
-     <p>Price: <span class="price animated bounce infinite">#6000 </p></span>
-     <button class="add-cart animated flip infinite">Add to cart</button>
-     <hr>
-     <p>Item name: Dress <span class="quantity"> <label>Quantity</label><input type="text"></span></p>
-     <p>Price: <span class="price">#5000</p></span>
-     <button class="add-cart animated bounce delay 5-s">Add to cart</button>
-     <hr>
-     <p>Item name: Shorts <span class="quantity"> <label>Quantity</label><input type="text"></span></p>
-     <p>Price: <span class="price">#4000</p></span>
-     <button class="add-cart animated fadeOut infinite">Add to cart</button>
-     <hr>
-     <p>Item name: Jeans <span class="quantity"> <label>Quantity</label><input type="text"></span></p>
-     <p>Price: <span class="price">#7000</p></span>
-      <button class="add-cart">Add to cart</button>
-      <div class="empty-top-1"></div>
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col" input style=" color: #5c4d74;">Item Name</th>
-        <th scope="col" input style=" color: #5c4d74;">Price</th>
-        <th scope="col" input style=" color: #5c4d74;">Quantity</th>
-        <!-- <th scope="col">Handle</th> -->
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">Dress</th>
-        <td>#8,000</td>
-        <td>2</td>
-        <td input style=" color: #5c4d74;">Remove</td>
-      </tr>
-      <tr>
-        <th scope="row">Short</th>
-        <td>#4,000</td>
-        <td>1</td>
-        <td input style=" color: #5c4d74;">Remove</td>
-      </tr>
-      <!-- <tr>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
-      </tr> -->
-    </tbody>
-  </table>
-    </div>
-     <hr>
-    </div>
-</div>
+<html class="no-js">
 
-        <script src="" async defer></script>
-    </body>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Shopping Cart</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+
+</head>
+
+<body>
+    <div class="row" id="app">
+        <!--First Column For the page!-->
+        <div class="col-md-2 side-bar">
+            <div class="side">
+                <div class="shopping-cart-text">
+                    <h3>Shopping Cart</h3>
+                </div>
+                <hr class="small-line" />
+                <img src="assets/images/cart.png" width="200px" height="200px">
+                <button @click="changeView()" type="button" class="btn btn-light">View Shopping Cart</button>
+                <hr class="small-line" />
+            </div>
+        </div>
+
+        <!--Second Column for the Page-->
+        <div class="col-md-10 full-bar">
+            <input class="xty form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+
+            <span class="fas fa-search"></span>
+            <hr />
+            <div class="empty-top" v-if="showShoppingCart === false"></div>
+
+            <div class="items" v-if="showShoppingCart === false">
+                <div class="item" v-for="item in storeItems">
+                    <p>Item Name:{{item.itemName}}
+                        <span class="quantity"><label>Quantity:</label> <input v-model="item.quantity" type="text"></span>
+                    </p>
+                    <p>Price: <span class="price">N{{item.price}}</span></p>
+                    <button class="add-cart animated swing infinite" @click="addToCart(item)">Add to Cart</button>
+                    <hr>
+                </div>
+            </div>
+
+            <div class="empty-top" v-if="showShoppingCart === true"></div>
+            <div class="items" v-if="showShoppingCart === true">
+
+                <table class="table">
+                    <thead class="">
+                        <tr class="tableColor">
+                            <th class="remove-button" scope="col">Item Name</th>
+                            <th class="remove-button" scope="col">Price</th>
+                            <th class="remove-button" scope="col">Quantity</th>
+                            <th class="remove-button" scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, index) in cart">
+                            <td>{{item.itemName}}</td>
+                            <td>{{item.price}}</td>
+                            <td>{{item.quantity}}</td>
+                            <td class="remove-button"><button class="my-btn" @click="removeFromCart(item, index)">Remove</button></td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+                <h2>{{total}}</h2>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!--Row Ends!-->
+    <!-- <script src="/assets/js/bootstrap.min.js"></script> -->
+    <script src="/assets/js/vue.js"></script>
+    <script src="/assets/js/index.js"></script>
+</body>
+
 </html>
